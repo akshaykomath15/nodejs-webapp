@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socket.io Chat</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const socket = io();
+
+      document.getElementById('messageForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const messageInput = document.getElementById('messageInput');
+        const message = messageInput.value;
+        socket.emit('message', message);
+        messageInput.value = '';
+      });
+
+      socket.on('message', (msg) => {
+        const messages = document.getElementById('messages');
+        const messageElement = document.createElement('li');
+        messageElement.textContent = msg;
+        messages.appendChild(messageElement);
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Socket.io Chat</h1>
+  <ul id="messages"></ul>
+  <form id="messageForm">
+    <input id="messageInput" autocomplete="off" /><button>Send</button>
+  </form>
+</body>
+</html>
