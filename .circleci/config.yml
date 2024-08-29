@@ -1,33 +1,27 @@
 version: 2.1
 
 jobs:
-  build:
+  test:
     docker:
-      - image: circleci/node:14  # Use the Node.js image
+      - image: circleci/node:14  # Use the Node.js Docker image
     steps:
       - checkout
       - run:
           name: Install Dependencies
           command: npm install
-      #- run:
-         # name: Run Tests
-         # command: npm test
       - run:
-          name: Build Application
-          command: npm run build
-      - setup_remote_docker:
-          version: 20.10.7
+          name: Run Tests
+          command: npm test
       - run:
-          name: Docker Build
-          command: docker build -t akshaykomath1/your-image-name:$CIRCLE_SHA1 .
-      - run:
-          name: Docker Push
-          command: |
-            echo "akshaykomath1" | docker login -u "akshaykomath1" --password-stdin
-            docker push akshaykomath1/your-image-name:$CIRCLE_SHA1
+          name: Success Message
+          command: echo "Pipeline ran successfully!"
 
-workflows:
-  version: 2
-  build-and-deploy:
-    jobs:
-      - build
+  # Optionally, you can add a deploy job if needed
+  # deploy:
+  #   docker:
+  #     - image: circleci/node:14
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Docker Build
+  #         command: docker build -t your-dockerhub-
