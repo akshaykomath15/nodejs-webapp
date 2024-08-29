@@ -16,12 +16,8 @@ jobs:
           name: Success Message
           command: echo "Pipeline ran successfully!"
 
-  # Optionally, you can add a deploy job if needed
-  # deploy:
-  #   docker:
-  #     - image: circleci/node:14
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Docker Build
-  #         command: docker build -t your-dockerhub-
+  workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - test        
