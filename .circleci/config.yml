@@ -1,23 +1,16 @@
 version: 2.1
 
 jobs:
-  test:
+  hello-world:
     docker:
-      - image: circleci/node:14  # Use the Node.js Docker image
+      - image: circleci/python:3.8  # You can use any Docker image; this is just an example.
     steps:
-      - checkout
       - run:
-          name: Install Dependencies
-          command: npm install
-      - run:
-          name: Run Tests
-          command: npm test
-      - run:
-          name: Success Message
-          command: echo "Pipeline ran successfully!"
+          name: Print Hello World
+          command: echo "Hello World"
 
-  workflows:
+workflows:
   version: 2
-  test-and-deploy:
+  hello-world-workflow:
     jobs:
-      - test        
+      - hello-world
