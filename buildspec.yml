@@ -3,8 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 14 # or whatever Node.js version you're using
-      # No need to specify Docker here; it's available by default
+      nodejs: 14
     commands:
       - echo Installing dependencies...
       - npm install
@@ -21,3 +20,8 @@ phases:
     commands:
       - echo Pushing the Docker image...
       - docker push 992382597694.dkr.ecr.us-east-2.amazonaws.com/my-app:latest
+
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: yes
