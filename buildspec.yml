@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Installing dependencies..."
+      - npm install
+  build:
+    commands:
+      - echo "Building the Docker image..."
+      - $(aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 992382597694.dkr.ecr.us-east-2.amazonaws.com)
+      - docker build -t myimg.
+      - docker tag myimg:latest 992382597694.dkr.ecr.us-east-2.amazonaws.com/myimg:latest
+      - docker push 992382597694.dkr.ecr.us-east-2.amazonaws.com/img:latest
+
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: yes
