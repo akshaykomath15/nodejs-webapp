@@ -20,8 +20,11 @@ phases:
     commands:
       - echo Pushing the Docker image...
       - docker push 992382597694.dkr.ecr.us-east-2.amazonaws.com/my-app:latest
+      - echo Creating imagedefinitions.json file...
+      - printf '[{"name":"container-name","imageUri":"992382597694.dkr.ecr.us-east-2.amazonaws.com/my-app:latest"}]' > imagedefinitions.json
 
 artifacts:
   files:
+    - imagedefinitions.json
     - '**/*'
   discard-paths: yes
