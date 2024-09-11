@@ -2,18 +2,22 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      docker: 18
+      python: 3.x
     commands:
-      - echo "Installing dependencies..."
+      - echo Installing dependencies...
       - npm install
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 992382597694.dkr.ecr.us-east-2.amazonaws.com
   build:
     commands:
-      - echo "Building the Docker image..."
-      - $(aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 992382597694.dkr.ecr.us-east-2.amazonaws.com)
-      - docker build -t myimg.
-      - docker tag myimg:latest 992382597694.dkr.ecr.us-east-2.amazonaws.com/myimg:latest
-      - docker push 992382597694.dkr.ecr.us-east-2.amazonaws.com/img:latest
-
-artifacts:
-  files:
-    - '**/*'
-  discard-paths: yes
+      - echo Building the Docker image...
+      - docker build -t my-app .
+      - docker tag my-app:latest 992382597694.dkr.ecr.us-east-2.amazonaws.com/my-app:latest
+  post_build:
+    commands:
+      - echo Pushing the Docker image...
+      - docker push 992382597694.dkr.ecr.us-east-2.amazonaws.com/my-app:latest
