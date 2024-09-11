@@ -3,8 +3,8 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      docker: 18
-      python: 3.x
+      nodejs: 14 # or whatever Node.js version you're using
+      # No need to specify Docker here; it's available by default
     commands:
       - echo Installing dependencies...
       - npm install
